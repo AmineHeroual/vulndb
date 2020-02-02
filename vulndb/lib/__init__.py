@@ -29,6 +29,11 @@ class VulnerabilitySource(metaclass=ABCMeta):
 
     @classmethod
     @abstractmethod
+    def bulk_search():
+        pass
+
+    @classmethod
+    @abstractmethod
     def convert(data):
         pass
 

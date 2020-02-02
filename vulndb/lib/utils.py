@@ -271,3 +271,28 @@ def parse_cpe(cpe_uri):
     """
     parts = CPE_REGEX.match(cpe_uri)
     return parts.group("vendor"), parts.group("package"), parts.group("version")
+
+
+def get_default_cve_data(severity):
+    """
+    Return some default CVE metadata for the given severity
+    :param severity: Severity
+    :return: score, vectorString
+    """
+    vectorString = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+    score = 9.0
+    severity = severity.upper()
+    attackComplexity = severity
+    if severity == "LOW":
+        score = 2.0
+        attackComplexity = "HIGH"
+        vectorString = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N"
+    elif severity in ["MODERATE", "MODERATE"]:
+        score = 5.0
+        severity = "MEDIUM"
+        vectorString = "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
+    elif severity == "HIGH":
+        score = 7.5
+        attackComplexity = "LOW"
+        vectorString = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L"
+    return score, severity, vectorString, attackComplexity
